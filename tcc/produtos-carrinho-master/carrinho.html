@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="./wireframes/logo.png">
+    <title>Cardapio - The Coffe Club</title>
+</head>
+
+<body onload="listarProdutos()">
+
+    <header>
+        <div id="icone-logo">
+            <a href="http://127.0.0.1:5500/tcc/">
+            <img src="./wireframes/logo.png" alt="logo">
+            </a>
+        </div>
+
+        <h1>Cardápio The Coffe Club</h1>
+
+        <nav>
+            <div id="carrinho-wrapper" onclick="preencherTabelaCarrinho(); mostrarCarrinho()">
+                <img id="icone-carrinho" src="./wireframes/carrinho.png" alt="Carrinho de compras">
+                <span id="contadorCarrinho">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="conteiner"></div>
+    </main>
+
+    <div id="mensagem" class="modal oculto">
+        <div class="janela">
+
+            <h3 id="texto"></h3>
+
+            <button onclick="mensagem.classList.add('oculto')">
+                Ok
+            </button>
+
+        </div>
+    </div>
+
+
+    <div id="detalhes" class="modal oculto">
+        <div class="janela">
+
+            <div class="cabecalho">
+                <h3 id="titulo"></h3>
+
+                <button onclick="detalhes.classList.add('oculto')">
+                    X
+                </button>
+            </div>
+
+            <p>
+                Id do item:
+                <label id="idProd"></label>
+            </p>
+
+            <img class="img-detalhes" id="img">
+
+            <h4 id="descricao"> </h4>
+            <p id="preco"></p>
+
+            <button onclick="detalhes.classList.add('oculto'); adicionarCarrinho(Number(idProd.innerHTML))">
+
+                Adicionar ao Carrinho
+
+            </button>
+
+        </div>
+    </div>
+
+    <div id="carrinhoCompras" class="modal oculto">
+        <div class="janela janela-carrinho">
+
+            <div class="cabecalho">
+                <h3> Carrinho de compras</h3>
+
+                <button onclick="carrinhoCompras.classList.add('oculto')">
+                    X
+                </button>
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Foto</th>
+                        <th>Quantidade</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody id="corpoCarrinho">
+                </tbody>
+
+            </table>
+
+            <p id="totalCarrinho">
+                Total R$ 0,00
+            </p>
+
+            <button class="botao-finalizar" onclick="abrirFinalizarCompra()">
+                Finalizar Compra
+            </button>
+
+        </div>
+    </div>
+
+
+    <div id="finalizarCompra" class="modal oculto">
+        <div class="janela">
+
+            <div class="cabecalho">
+                <h3>Finalizar Compra</h3>
+
+                <button onclick="fecharFinalizarCompra()">
+                    X
+                </button>
+            </div>
+
+            <p id="resumoCompra"></p>
+
+            <input type="text" id="nomeCliente" placeholder="Digite seu nome">
+
+            <input type="text" id="enderecoCliente" placeholder="Digite seu endereço">
+
+            <select id="pagamento">
+
+                <option value="">
+                    Selecione a forma de pagamento
+                </option>
+
+                <option value="Pix">
+                    Pix
+                </option>
+
+                <option value="Cartão de Crédito">
+                    Cartão de Crédito
+                </option>
+
+                <option value="Cartão de Débito">
+                    Cartão de Débito
+                </option>
+
+                <option value="Dinheiro">
+                    Dinheiro
+                </option>
+
+            </select>
+
+            <button class="botao-finalizar" onclick="confirmarCompra()">
+                Confirmar Compra
+            </button>
+
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
