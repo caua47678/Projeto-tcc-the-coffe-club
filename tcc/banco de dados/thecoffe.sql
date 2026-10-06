@@ -1,14 +1,5 @@
--- =========================================================
--- Banco de Dados - The Coffe Club
--- Projeto de TCC - José da Costa
--- SQLite
--- =========================================================
-
 PRAGMA foreign_keys = ON;
 
--- ---------------------------------------------------------
--- Tabela: clientes
--- ---------------------------------------------------------
 CREATE TABLE clientes (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     nome        TEXT NOT NULL,
@@ -16,21 +7,15 @@ CREATE TABLE clientes (
     telefone    TEXT
 );
 
--- ---------------------------------------------------------
--- Tabela: entregadores
--- ---------------------------------------------------------
 CREATE TABLE entregadores (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     nome        TEXT NOT NULL,
     telefone    TEXT,
-    veiculo     TEXT,              -- ex: Moto, Bicicleta, Carro
+    veiculo     TEXT,
     placa       TEXT,
-    ativo       INTEGER NOT NULL DEFAULT 1   -- 1 = ativo, 0 = inativo
+    ativo       INTEGER NOT NULL DEFAULT 1
 );
 
--- ---------------------------------------------------------
--- Tabela: produtos (itens do cardápio)
--- ---------------------------------------------------------
 CREATE TABLE produtos (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     nome        TEXT NOT NULL,
@@ -39,13 +24,10 @@ CREATE TABLE produtos (
     imagem      TEXT
 );
 
--- ---------------------------------------------------------
--- Tabela: pedidos
--- ---------------------------------------------------------
 CREATE TABLE pedidos (
     id                INTEGER PRIMARY KEY AUTOINCREMENT,
     cliente_id        INTEGER NOT NULL,
-    entregador_id     INTEGER,                  -- pode ficar nulo até um entregador ser designado
+    entregador_id     INTEGER,
     data_pedido       TEXT NOT NULL DEFAULT (datetime('now')),
     forma_pagamento   TEXT NOT NULL CHECK (forma_pagamento IN ('Pix', 'Cartão de Crédito', 'Cartão de Débito', 'Dinheiro')),
     status            TEXT NOT NULL DEFAULT 'Pendente' CHECK (status IN ('Pendente', 'Em preparo', 'Saiu para entrega', 'Entregue', 'Cancelado')),
@@ -54,9 +36,6 @@ CREATE TABLE pedidos (
     FOREIGN KEY (entregador_id) REFERENCES entregadores(id)
 );
 
--- ---------------------------------------------------------
--- Tabela: itens_pedido (produtos dentro de cada pedido)
--- ---------------------------------------------------------
 CREATE TABLE itens_pedido (
     id                INTEGER PRIMARY KEY AUTOINCREMENT,
     pedido_id         INTEGER NOT NULL,
@@ -67,9 +46,6 @@ CREATE TABLE itens_pedido (
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
 
--- =========================================================
--- Dados iniciais: produtos do cardápio (do script.js)
--- =========================================================
 INSERT INTO produtos (id, nome, descricao, preco, imagem) VALUES
 (1,  'Café Preto Tradicional',              'Café puro e intenso, servido gelado, no estilo clássico.',                     12.90, 'wireframes/cf1.png'),
 (2,  'Cappuccino Cremoso',                  'Espresso encorpado com espuma de leite cremosa e finalização em calda.',      15.90, 'wireframes/cf2.png'),
@@ -84,16 +60,10 @@ INSERT INTO produtos (id, nome, descricao, preco, imagem) VALUES
 (11, 'Café Americano Encorpado',            'Café encorpado e aromático, ideal para quem gosta de sabor intenso.',         12.50, 'wireframes/c11.png'),
 (12, 'Café Espresso Clássico',              'Espresso tradicional, forte e puro, servido gelado com toque cremoso.',       11.90, 'wireframes/c12.png');
 
--- =========================================================
--- Dados de exemplo: entregadores
--- =========================================================
 INSERT INTO entregadores (nome, telefone, veiculo, placa) VALUES
 ('Carlos Silva',   '(11) 91234-5678', 'Moto',      'ABC1D23'),
 ('Fernanda Souza',  '(11) 99876-5432', 'Bicicleta', NULL);
 
--- =========================================================
--- Dados de exemplo: cliente, pedido e itens (para teste)
--- =========================================================
 INSERT INTO clientes (nome, endereco, telefone) VALUES
 ('José da Costa', 'Rua das Flores, 123 - São Paulo/SP', '(11) 98888-7777');
 

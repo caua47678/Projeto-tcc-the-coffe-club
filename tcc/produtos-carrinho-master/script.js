@@ -1,10 +1,7 @@
 const prods = document.querySelector(".conteiner");
 
-// URL base da API (servidor Node.js/Express - ver pasta /server)
 const API_URL = "http://localhost:3000/api";
 
-// Os produtos agora vêm do banco de dados (thecoffe.db) via API.
-// Fica vazio até a resposta do fetch chegar em listarProdutos().
 let produtos = [];
 
 const carrinho = [];
@@ -65,8 +62,6 @@ async function listarProdutos() {
 
     prods.innerHTML = output;
 
-    // Se a página foi aberta com ?produto=ID (ex: vindo da tela inicial),
-    // abre os detalhes assim que os produtos chegarem do servidor.
     const params = new URLSearchParams(window.location.search);
     const idProduto = params.get("produto");
 
@@ -443,7 +438,6 @@ async function confirmarCompra() {
     }
 
 
-    // Monta a lista de itens no formato que a API espera: [{ id, quantidade }]
     const itens = carrinho.map(produto => ({
         id: produto.id,
         quantidade: produto.quantidade
